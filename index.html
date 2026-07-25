@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Семейный бюджет — калькулятор доходов и расходов</title>
+<meta name="description" content="Бесплатный калькулятор семейного бюджета: доходы, расходы, остаток и правило 50/30/20. Данные хранятся только в вашем браузере.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/landing.css">
+<script src="js/theme-init.js"></script>
+</head>
+<body>
+<div class="landing">
+  <nav class="site-nav" aria-label="Главная навигация">
+    <a class="brand" href="index.html">Семейный бюджет</a>
+    <div class="nav-links">
+      <a class="nav-link" href="#how">Как это работает</a>
+      <a class="nav-cta" href="app.html">Открыть калькулятор</a>
+    </div>
+  </nav>
+
+  <header class="landing-hero">
+    <div class="landing-copy">
+      <h1 class="landing-brand">Семейный бюджет</h1>
+      <p class="landing-lead">
+        Посчитайте доходы и расходы за месяц, увидите остаток и насколько вы близки к правилу 50/30/20.
+      </p>
+      <div class="landing-cta">
+        <a class="btn-hero" href="app.html">Рассчитать бюджет</a>
+        <a class="btn-hero-ghost" href="#how">Кратко о правиле</a>
+      </div>
+    </div>
+
+    <div class="landing-visual" aria-hidden="true">
+      <div class="visual-plane"></div>
+      <div class="visual-chart">
+        <div class="visual-bar"></div>
+        <div class="visual-bar"></div>
+        <div class="visual-bar"></div>
+      </div>
+      <div class="visual-caption">
+        <span>Нужды</span>
+        <span>Желания</span>
+        <span>Сбережения</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="landing-section" id="how">
+    <h2>Как это работает</h2>
+    <p>
+      Один экран: вводите цифры — получаете сводку. Без регистрации и без отправки данных на сервер.
+    </p>
+    <ul class="feature-list">
+      <li>
+        <strong>Доходы и расходы по категориям</strong>
+        <span>Добавляйте строки, помечайте нужды, желания и накопления.</span>
+      </li>
+      <li>
+        <strong>Сводка и правило 50/30/20</strong>
+        <span>Остаток, норма сбережений и сравнение с ориентиром 50% / 30% / 20%.</span>
+      </li>
+      <li>
+        <strong>Сохранение в браузере</strong>
+        <span>Кнопки «Сохранить» и «Загрузить» пишут данные только в localStorage.</span>
+      </li>
+    </ul>
+  </section>
+
+  <footer class="landing-footer">
+    Данные не уходят в сеть. Откройте калькулятор и посчитайте бюджет за пару минут.
+  </footer>
+</div>
+
+<button
+  type="button"
+  class="theme-toggle"
+  id="themeToggle"
+  title="Переключить тему"
+  aria-label="Включить тёмную тему"
+>
+  <span class="icon-moon" aria-hidden="true">🌙</span>
+  <span class="icon-sun" aria-hidden="true">☀️</span>
+</button>
+
+<script src="js/theme.js"></script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+# ОС и редакторы
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo
+.idea/
+.vscode/
+*.code-workspace
+
+# Логи и временные файлы
+*.log
+*.tmp
+*.temp
+.cache/
+
+# Зависимости (на будущее)
+node_modules/
+.venv/
+__pycache__/
+
+# Локальные окружения
+.env
+.env.*
+!.env.example

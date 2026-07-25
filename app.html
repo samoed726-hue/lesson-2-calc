@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Калькулятор семейного бюджета</title>
+<meta name="description" content="Посчитайте месячный семейный бюджет: доходы, расходы, остаток и правило 50/30/20.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/app.css">
+<script src="js/theme-init.js"></script>
+</head>
+<body class="app-page">
+
+<nav class="site-nav" aria-label="Навигация">
+  <a class="brand" href="index.html">Семейный бюджет</a>
+  <div class="nav-links">
+    <a class="nav-link" href="index.html">На главную</a>
+  </div>
+</nav>
+
+<div class="app">
+  <header class="hero">
+    <div class="badge">Семейные финансы</div>
+    <h1>Калькулятор семейного бюджета</h1>
+    <p>
+      Посчитайте доходы и расходы семьи за месяц, узнайте остаток, норму сбережений
+      и насколько бюджет близок к правилу 50/30/20.
+    </p>
+  </header>
+
+  <div class="layout">
+    <section class="panel" aria-label="Ввод данных">
+      <div class="section">
+        <h2>Семья</h2>
+        <p class="hint">Число людей нужно для расчёта остатка «на одного человека».</p>
+        <div class="field">
+          <label for="familySize">Членов семьи</label>
+          <input type="number" id="familySize" min="1" step="1" value="3" inputmode="numeric">
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-head">
+          <h2>Доходы (₽ / месяц)</h2>
+          <button type="button" class="btn-add" id="addIncome" title="Добавить строку дохода">+ Добавить</button>
+        </div>
+        <p class="hint">Зарплаты, фриланс, пособия, аренда, проценты по вкладам.</p>
+        <div class="meta">Название · Сумма</div>
+        <div id="incomeList"></div>
+      </div>
+
+      <div class="section">
+        <div class="section-head">
+          <h2>Расходы (₽ / месяц)</h2>
+          <button type="button" class="btn-add" id="addExpense" title="Добавить строку расхода">+ Добавить</button>
+        </div>
+        <p class="hint">
+          Категории с меткой «нужда» идут в 50%, «желание» — в 30%.
+          Сбережения и погашение долгов удобно вносить отдельной строкой.
+        </p>
+        <div class="meta">Категория · Сумма · Тип</div>
+        <div id="expenseList"></div>
+      </div>
+
+      <button type="button" class="btn-primary" id="calcBtn">Рассчитать бюджет</button>
+
+      <div class="actions">
+        <button type="button" class="btn-ghost" id="saveBtn">Сохранить</button>
+        <button type="button" class="btn-ghost" id="loadBtn">Загрузить</button>
+        <button type="button" class="btn-ghost" id="resetBtn">Сбросить</button>
+        <button type="button" class="btn-ghost" id="printBtn">Печать</button>
+      </div>
+    </section>
+
+    <aside class="panel" aria-label="Результаты расчёта" id="resultsPanel">
+      <h2>Сводка за месяц</h2>
+      <div id="summaryEmpty" class="summary-empty">
+        Заполните доходы и расходы слева, затем нажмите «Рассчитать бюджет».
+      </div>
+
+      <div id="summaryBody" hidden>
+        <div class="kpis">
+          <div class="kpi neutral">
+            <div class="label">Доход</div>
+            <div class="value" id="outIncome">0 ₽</div>
+          </div>
+          <div class="kpi neutral">
+            <div class="label">Расход</div>
+            <div class="value" id="outExpense">0 ₽</div>
+          </div>
+          <div class="kpi wide" id="balanceKpi">
+            <div class="label">Остаток</div>
+            <div class="value" id="outBalance">0 ₽</div>
+          </div>
+          <div class="kpi neutral">
+            <div class="label">На человека</div>
+            <div class="value" id="outPerPerson">0 ₽</div>
+          </div>
+          <div class="kpi neutral">
+            <div class="label">Сбережения</div>
+            <div class="value" id="outSaveRate">0%</div>
+          </div>
+        </div>
+
+        <div class="bars">
+          <div class="bar-block">
+            <div class="bar-labels">
+              <span>Нужды (цель 50%)</span>
+              <span id="needsPct">0%</span>
+            </div>
+            <div class="bar-track"><div class="bar-fill needs" id="needsBar"></div></div>
+          </div>
+          <div class="bar-block">
+            <div class="bar-labels">
+              <span>Желания (цель 30%)</span>
+              <span id="wantsPct">0%</span>
+            </div>
+            <div class="bar-track"><div class="bar-fill wants" id="wantsBar"></div></div>
+          </div>
+          <div class="bar-block">
+            <div class="bar-labels">
+              <span>Сбережения / остаток (цель 20%)</span>
+              <span id="savePct">0%</span>
+            </div>
+            <div class="bar-track"><div class="bar-fill save" id="saveBar"></div></div>
+          </div>
+        </div>
+
+        <div class="advice" id="adviceBox"></div>
+
+        <div class="breakdown">
+          <h3>Структура расходов</h3>
+          <ul class="breakdown-list" id="expenseBreakdown"></ul>
+        </div>
+
+        <div class="rule-box">
+          <strong>Правило 50/30/20:</strong>
+          половина дохода — на обязательные нужды, 30% — на желания,
+          20% — откладывать или гасить долги. Это ориентир, не жёсткий закон.
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <p class="footer-note">
+    Данные хранятся только в вашем браузере (localStorage). Никуда не отправляются.
+  </p>
+</div>
+
+<button
+  type="button"
+  class="theme-toggle"
+  id="themeToggle"
+  title="Переключить тему"
+  aria-label="Включить тёмную тему"
+>
+  <span class="icon-moon" aria-hidden="true">🌙</span>
+  <span class="icon-sun" aria-hidden="true">☀️</span>
+</button>
+
+<script src="js/theme.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
