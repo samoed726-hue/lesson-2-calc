@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Генератор идей</title>
+  <meta name="description" content="Пять идей постов и две истории на завтра — одним нажатием.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #1a2e28;
+      --muted: #4a635a;
+      --paper: #e8f0ec;
+      --leaf: #2d6a4f;
+      --leaf-deep: #1b4332;
+      --glow: #95d5b2;
+      --line: rgba(26, 46, 40, 0.12);
+      --card: rgba(255, 255, 255, 0.55);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      font-family: "DM Sans", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(ellipse 80% 50% at 10% 0%, #b7e4c7 0%, transparent 55%),
+        radial-gradient(ellipse 60% 40% at 90% 100%, #d8f3dc 0%, transparent 50%),
+        linear-gradient(165deg, #d8e8df 0%, var(--paper) 45%, #cfe3d6 100%);
+      overflow-x: hidden;
+    }
+
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(ellipse at center, black 20%, transparent 75%);
+      pointer-events: none;
+      opacity: 0.5;
+    }
+
+    main {
+      position: relative;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 4.5rem 1.5rem 3rem;
+    }
+
+    .brand {
+      font-family: "Fraunces", serif;
+      font-size: clamp(2.4rem, 7vw, 3.6rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      color: var(--leaf-deep);
+      animation: rise 0.7s ease both;
+    }
+
+    .lead {
+      margin-top: 0.85rem;
+      max-width: 28rem;
+      font-size: 1.05rem;
+      line-height: 1.55;
+      color: var(--muted);
+      animation: rise 0.7s ease 0.08s both;
+    }
+
+    .cta {
+      margin-top: 1.75rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 1.4rem;
+      border: none;
+      border-radius: 999px;
+      background: var(--leaf-deep);
+      color: #f0faf4;
+      font: inherit;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(27, 67, 50, 0.25);
+      transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+      animation: rise 0.7s ease 0.16s both;
+    }
+
+    .cta:hover {
+      background: var(--leaf);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(27, 67, 50, 0.3);
+    }
+
+    .cta:active { transform: translateY(0); }
+
+    .results {
+      margin-top: 2.75rem;
+      display: grid;
+      gap: 2rem;
+    }
+
+    .block {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.45s ease, transform 0.45s ease;
+    }
+
+    .block.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .block:nth-child(2) { transition-delay: 0.12s; }
+
+    .block h2 {
+      font-family: "Fraunces", serif;
+      font-size: 1.35rem;
+      font-weight: 500;
+      color: var(--leaf-deep);
+      margin-bottom: 0.9rem;
+      display: flex;
+      align-items: baseline;
+      gap: 0.55rem;
+    }
+
+    .block h2 span {
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--leaf);
+      background: rgba(45, 106, 79, 0.12);
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+    }
+
+    ol, ul {
+      list-style: none;
+      display: grid;
+      gap: 0.65rem;
+    }
+
+    li {
+      position: relative;
+      padding: 0.95rem 1.1rem 0.95rem 2.75rem;
+      background: var(--card);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      border-radius: 14px;
+      line-height: 1.45;
+      font-size: 0.98rem;
+      animation: pop 0.4s ease both;
+    }
+
+    li::before {
+      position: absolute;
+      left: 0.95rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 1.4rem;
+      height: 1.4rem;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--glow);
+      color: var(--leaf-deep);
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+
+    ol li:nth-child(1)::before { content: "1"; }
+    ol li:nth-child(2)::before { content: "2"; }
+    ol li:nth-child(3)::before { content: "3"; }
+    ol li:nth-child(4)::before { content: "4"; }
+    ol li:nth-child(5)::before { content: "5"; }
+    ul li:nth-child(1)::before { content: "А"; }
+    ul li:nth-child(2)::before { content: "Б"; }
+
+    li:nth-child(1) { animation-delay: 0.05s; }
+    li:nth-child(2) { animation-delay: 0.1s; }
+    li:nth-child(3) { animation-delay: 0.15s; }
+    li:nth-child(4) { animation-delay: 0.2s; }
+    li:nth-child(5) { animation-delay: 0.25s; }
+
+    .empty {
+      margin-top: 2.5rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+      animation: rise 0.7s ease 0.24s both;
+    }
+
+    .empty.hidden { display: none; }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pop {
+      from { opacity: 0; transform: scale(0.97) translateY(8px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    @media (max-width: 480px) {
+      main { padding: 3rem 1.15rem 2.5rem; }
+      li { padding-left: 2.55rem; font-size: 0.92rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <main>
+    <h1 class="brand">Генератор идей</h1>
+    <p class="lead">Пять идей постов и две истории на завтра — свежая порция за одно нажатие.</p>
+    <button type="button" class="cta" id="generateBtn">Сгенерировать</button>
+
+    <p class="empty" id="emptyHint">Нажмите кнопку — появятся идеи.</p>
+
+    <div class="results" id="results" hidden>
+      <section class="block" id="postsBlock" aria-labelledby="postsTitle">
+        <h2 id="postsTitle">Идеи постов <span>5 штук</span></h2>
+        <ol id="postsList"></ol>
+      </section>
+
+      <section class="block" id="storiesBlock" aria-labelledby="storiesTitle">
+        <h2 id="storiesTitle">Истории на завтра <span>2 штуки</span></h2>
+        <ul id="storiesList"></ul>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const POST_IDEAS = [
+      "Разбор одной привычки, которая экономит час в день",
+      "«До / после»: маленький эксперимент за неделю",
+      "Ответы на 5 вопросов, которые вам часто пишут в директ",
+      "Миф из вашей ниши — и почему он мешает",
+      "Чеклист на вечер: 7 пунктов без перфекционизма",
+      "История про ошибку, из которой вышли с пользой",
+      "Сравнение двух подходов: что выбрать новичку",
+      "Короткий гайд: с чего начать, если совсем нет времени",
+      "Подборка инструментов, которыми реально пользуетесь",
+      "Что бы вы сказали себе год назад — письмо в прошлое",
+      "Три признака, что пора менять стратегию",
+      "Разбор чужого кейса: что сработало и что нет",
+      "«Один день из…» — закулисье обычного рабочего дня",
+      "Вопрос аудитории + ваши честные ответы",
+      "Мини-урок в карусели: шаг 1 → шаг 2 → шаг 3",
+      "Что не стоит делать в первые 30 дней",
+      "Личный рейтинг: топ-3 находки месяца",
+      "Как объяснить сложную тему за 60 секунд",
+      "Серия «мифы vs факты» по вашей теме",
+      "Приглашение к диалогу: опрос с одним острым вопросом",
+    ];
+
+    const STORY_IDEAS = [
+      "Утренний кадр + голос: «Сегодня пробую одну новую привычку»",
+      "За кулисами подготовки: стол, заметки, чашка — без фильтров",
+      "Короткий опрос в сторис: «Что вам интереснее завтра?»",
+      "Таймер 15 секунд: один совет, который сработал вчера",
+      "До/после мини-задачи за день — показать прогресс",
+      "Ответ на комментарий — в формате истории с текстом",
+      "Спойлер завтрашнего поста: одна фраза и интрига",
+      "«Что в сумке / на столе» — три предмета, которые спасают день",
+      "Быстрый Q&A: один вопрос — один честный ответ",
+      "Напоминание о цели недели + стикер с прогрессом",
+      "Момент «почти сдался, но…» — короткая история дня",
+      "Скриншот идеи из блокнота + подпись «черновик»",
+    ];
+
+    function pick(arr, n) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy.slice(0, n);
+    }
+
+    const btn = document.getElementById("generateBtn");
+    const results = document.getElementById("results");
+    const emptyHint = document.getElementById("emptyHint");
+    const postsList = document.getElementById("postsList");
+    const storiesList = document.getElementById("storiesList");
+    const postsBlock = document.getElementById("postsBlock");
+    const storiesBlock = document.getElementById("storiesBlock");
+
+    function render() {
+      const posts = pick(POST_IDEAS, 5);
+      const stories = pick(STORY_IDEAS, 2);
+
+      postsList.innerHTML = posts.map((t) => `<li>${t}</li>`).join("");
+      storiesList.innerHTML = stories.map((t) => `<li>${t}</li>`).join("");
+
+      emptyHint.classList.add("hidden");
+      results.hidden = false;
+
+      postsBlock.classList.remove("visible");
+      storiesBlock.classList.remove("visible");
+      void postsBlock.offsetWidth;
+      postsBlock.classList.add("visible");
+      storiesBlock.classList.add("visible");
+
+      btn.textContent = "Ещё раз";
+    }
+
+    btn.addEventListener("click", render);
+  </script>
+</body>
+</html>
