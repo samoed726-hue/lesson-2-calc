@@ -7,171 +7,313 @@
   <meta name="description" content="Пять идей постов и две истории на завтра — одним нажатием.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --ink: #1a2e28;
-      --muted: #4a635a;
-      --paper: #e8f0ec;
-      --leaf: #2d6a4f;
-      --leaf-deep: #1b4332;
-      --glow: #95d5b2;
-      --line: rgba(26, 46, 40, 0.12);
-      --card: rgba(255, 255, 255, 0.55);
+      --ink: #0f2744;
+      --muted: #5a6d82;
+      --paper: #e8eef4;
+      --accent: #e85d4c;
+      --accent-deep: #c94436;
+      --sky: #7eb8d8;
+      --mist: #c5d8e8;
+      --line: rgba(15, 39, 68, 0.1);
+      --surface: rgba(255, 255, 255, 0.62);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       min-height: 100vh;
-      font-family: "DM Sans", sans-serif;
+      font-family: "Outfit", sans-serif;
       color: var(--ink);
       background:
-        radial-gradient(ellipse 80% 50% at 10% 0%, #b7e4c7 0%, transparent 55%),
-        radial-gradient(ellipse 60% 40% at 90% 100%, #d8f3dc 0%, transparent 50%),
-        linear-gradient(165deg, #d8e8df 0%, var(--paper) 45%, #cfe3d6 100%);
+        radial-gradient(ellipse 70% 55% at 85% -10%, #f7c5b8 0%, transparent 55%),
+        radial-gradient(ellipse 55% 45% at -5% 90%, var(--mist) 0%, transparent 50%),
+        linear-gradient(160deg, #dce6f0 0%, var(--paper) 40%, #d4e4f0 100%);
       overflow-x: hidden;
     }
 
-    .bg-grid {
+    .atmosphere {
       position: fixed;
       inset: 0;
-      background-image:
-        linear-gradient(var(--line) 1px, transparent 1px),
-        linear-gradient(90deg, var(--line) 1px, transparent 1px);
-      background-size: 48px 48px;
-      mask-image: radial-gradient(ellipse at center, black 20%, transparent 75%);
       pointer-events: none;
-      opacity: 0.5;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(40px);
+      opacity: 0.55;
+      animation: drift 18s ease-in-out infinite;
+    }
+
+    .orb-a {
+      width: 280px;
+      height: 280px;
+      background: #f0a090;
+      top: -60px;
+      right: 8%;
+      animation-duration: 16s;
+    }
+
+    .orb-b {
+      width: 220px;
+      height: 220px;
+      background: var(--sky);
+      bottom: 10%;
+      left: -40px;
+      animation-duration: 22s;
+      animation-direction: reverse;
+    }
+
+    .orb-c {
+      width: 160px;
+      height: 160px;
+      background: #a8c8e0;
+      top: 45%;
+      right: -30px;
+      animation-duration: 14s;
+      animation-delay: -4s;
+    }
+
+    .noise {
+      position: absolute;
+      inset: 0;
+      opacity: 0.04;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     }
 
     main {
       position: relative;
-      max-width: 720px;
+      z-index: 1;
+      max-width: 700px;
       margin: 0 auto;
-      padding: 4.5rem 1.5rem 3rem;
+      padding: 4.5rem 1.5rem 3.5rem;
     }
 
     .brand {
-      font-family: "Fraunces", serif;
-      font-size: clamp(2.4rem, 7vw, 3.6rem);
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      line-height: 1.05;
-      color: var(--leaf-deep);
-      animation: rise 0.7s ease both;
+      font-family: "Syne", sans-serif;
+      font-size: clamp(2.6rem, 8vw, 4rem);
+      font-weight: 800;
+      letter-spacing: -0.045em;
+      line-height: 0.98;
+      color: var(--ink);
+      animation: brandIn 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .brand .accent-word {
+      display: inline-block;
+      background: linear-gradient(120deg, var(--accent) 0%, #f08a5a 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: wordPulse 4s ease-in-out infinite;
+    }
+
+    .underline {
+      display: block;
+      width: 0;
+      height: 4px;
+      margin-top: 0.7rem;
+      border-radius: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--sky));
+      animation: drawLine 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.35s both;
     }
 
     .lead {
-      margin-top: 0.85rem;
-      max-width: 28rem;
-      font-size: 1.05rem;
+      margin-top: 1.1rem;
+      max-width: 26rem;
+      font-size: 1.08rem;
       line-height: 1.55;
       color: var(--muted);
-      animation: rise 0.7s ease 0.08s both;
+      animation: rise 0.7s ease 0.2s both;
     }
 
     .cta {
-      margin-top: 1.75rem;
+      position: relative;
+      margin-top: 1.9rem;
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      padding: 0.85rem 1.4rem;
+      gap: 0.55rem;
+      padding: 0.95rem 1.55rem;
       border: none;
-      border-radius: 999px;
-      background: var(--leaf-deep);
-      color: #f0faf4;
+      border-radius: 12px;
+      background: var(--ink);
+      color: #f4f8fc;
       font: inherit;
       font-weight: 600;
-      font-size: 0.95rem;
+      font-size: 0.98rem;
       cursor: pointer;
-      box-shadow: 0 8px 24px rgba(27, 67, 50, 0.25);
-      transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
-      animation: rise 0.7s ease 0.16s both;
+      overflow: hidden;
+      transition: transform 0.25s ease, background 0.25s ease;
+      animation: rise 0.7s ease 0.32s both;
+    }
+
+    .cta::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.18) 50%, transparent 70%);
+      transform: translateX(-120%);
+      animation: shimmer 3.2s ease-in-out infinite;
     }
 
     .cta:hover {
-      background: var(--leaf);
-      transform: translateY(-2px);
-      box-shadow: 0 12px 28px rgba(27, 67, 50, 0.3);
+      background: var(--accent-deep);
+      transform: translateY(-3px);
     }
 
-    .cta:active { transform: translateY(0); }
+    .cta:active { transform: translateY(-1px) scale(0.98); }
+
+    .cta .spin {
+      width: 1rem;
+      height: 1rem;
+      border: 2px solid rgba(255, 255, 255, 0.35);
+      border-top-color: #fff;
+      border-radius: 50%;
+      display: none;
+      animation: rotate 0.6s linear infinite;
+    }
+
+    .cta.is-loading .spin { display: block; }
+    .cta.is-loading .cta-label { opacity: 0.7; }
+
+    .empty {
+      margin-top: 2.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+      animation: rise 0.7s ease 0.42s both;
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    .empty.hidden {
+      opacity: 0;
+      transform: translateY(-8px);
+      pointer-events: none;
+      height: 0;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .dots span {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      margin-right: 3px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: bounce 1.2s ease-in-out infinite;
+    }
+
+    .dots span:nth-child(2) { animation-delay: 0.15s; background: var(--sky); }
+    .dots span:nth-child(3) { animation-delay: 0.3s; background: var(--ink); }
 
     .results {
       margin-top: 2.75rem;
       display: grid;
-      gap: 2rem;
+      gap: 2.25rem;
     }
 
     .block {
       opacity: 0;
-      transform: translateY(16px);
-      transition: opacity 0.45s ease, transform 0.45s ease;
+      transform: translateY(22px);
     }
 
     .block.visible {
-      opacity: 1;
-      transform: translateY(0);
+      animation: blockIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
     }
 
-    .block:nth-child(2) { transition-delay: 0.12s; }
+    .block.delay { animation-delay: 0.14s; }
 
     .block h2 {
-      font-family: "Fraunces", serif;
-      font-size: 1.35rem;
-      font-weight: 500;
-      color: var(--leaf-deep);
-      margin-bottom: 0.9rem;
+      font-family: "Syne", sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 1rem;
       display: flex;
-      align-items: baseline;
-      gap: 0.55rem;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.6rem;
     }
 
-    .block h2 span {
-      font-family: "DM Sans", sans-serif;
-      font-size: 0.75rem;
+    .block h2 .tag {
+      font-family: "Outfit", sans-serif;
+      font-size: 0.72rem;
       font-weight: 600;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      color: var(--leaf);
-      background: rgba(45, 106, 79, 0.12);
-      padding: 0.2rem 0.55rem;
-      border-radius: 999px;
+      color: var(--accent-deep);
+      background: rgba(232, 93, 76, 0.14);
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+    }
+
+    .stories-block h2 .tag {
+      color: #2a6a8a;
+      background: rgba(126, 184, 216, 0.28);
     }
 
     ol, ul {
       list-style: none;
       display: grid;
-      gap: 0.65rem;
+      gap: 0.7rem;
     }
 
     li {
       position: relative;
-      padding: 0.95rem 1.1rem 0.95rem 2.75rem;
-      background: var(--card);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.7);
+      padding: 1rem 1.15rem 1rem 3rem;
+      background: var(--surface);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.75);
       border-radius: 14px;
       line-height: 1.45;
       font-size: 0.98rem;
-      animation: pop 0.4s ease both;
+      box-shadow: 0 1px 0 rgba(15, 39, 68, 0.04);
+      opacity: 0;
+      transform: translateX(-12px);
+      transition: border-color 0.25s ease, transform 0.25s ease, background 0.25s ease;
+    }
+
+    .block.visible li {
+      animation: slideIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    li:hover {
+      border-color: rgba(232, 93, 76, 0.35);
+      background: rgba(255, 255, 255, 0.85);
+      transform: translateX(4px);
+    }
+
+    .stories-block li:hover {
+      border-color: rgba(126, 184, 216, 0.55);
     }
 
     li::before {
       position: absolute;
-      left: 0.95rem;
+      left: 0.9rem;
       top: 50%;
       transform: translateY(-50%);
-      width: 1.4rem;
-      height: 1.4rem;
+      width: 1.55rem;
+      height: 1.55rem;
       display: grid;
       place-items: center;
-      border-radius: 50%;
-      background: var(--glow);
-      color: var(--leaf-deep);
-      font-size: 0.72rem;
+      border-radius: 8px;
+      background: linear-gradient(145deg, #f5b5aa, var(--accent));
+      color: #fff;
+      font-size: 0.7rem;
       font-weight: 700;
+    }
+
+    .stories-block li::before {
+      background: linear-gradient(145deg, #a8d4ec, #4a9bc4);
     }
 
     ol li:nth-child(1)::before { content: "1"; }
@@ -182,55 +324,109 @@
     ul li:nth-child(1)::before { content: "А"; }
     ul li:nth-child(2)::before { content: "Б"; }
 
-    li:nth-child(1) { animation-delay: 0.05s; }
-    li:nth-child(2) { animation-delay: 0.1s; }
-    li:nth-child(3) { animation-delay: 0.15s; }
-    li:nth-child(4) { animation-delay: 0.2s; }
-    li:nth-child(5) { animation-delay: 0.25s; }
+    .block.visible li:nth-child(1) { animation-delay: 0.08s; }
+    .block.visible li:nth-child(2) { animation-delay: 0.14s; }
+    .block.visible li:nth-child(3) { animation-delay: 0.2s; }
+    .block.visible li:nth-child(4) { animation-delay: 0.26s; }
+    .block.visible li:nth-child(5) { animation-delay: 0.32s; }
 
-    .empty {
-      margin-top: 2.5rem;
-      color: var(--muted);
-      font-size: 0.95rem;
-      animation: rise 0.7s ease 0.24s both;
+    .stories-block.visible li:nth-child(1) { animation-delay: 0.22s; }
+    .stories-block.visible li:nth-child(2) { animation-delay: 0.3s; }
+
+    @keyframes drift {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      40% { transform: translate(30px, 24px) scale(1.08); }
+      70% { transform: translate(-18px, 12px) scale(0.95); }
     }
 
-    .empty.hidden { display: none; }
+    @keyframes brandIn {
+      from { opacity: 0; transform: translateY(28px) scale(0.96); filter: blur(4px); }
+      to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+    }
+
+    @keyframes wordPulse {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.12); }
+    }
+
+    @keyframes drawLine {
+      from { width: 0; }
+      to { width: min(7.5rem, 40%); }
+    }
 
     @keyframes rise {
-      from { opacity: 0; transform: translateY(14px); }
+      from { opacity: 0; transform: translateY(16px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    @keyframes pop {
-      from { opacity: 0; transform: scale(0.97) translateY(8px); }
-      to { opacity: 1; transform: scale(1) translateY(0); }
+    @keyframes shimmer {
+      0%, 40% { transform: translateX(-120%); }
+      70%, 100% { transform: translateX(120%); }
+    }
+
+    @keyframes rotate {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes bounce {
+      0%, 80%, 100% { transform: translateY(0); opacity: 0.5; }
+      40% { transform: translateY(-5px); opacity: 1; }
+    }
+
+    @keyframes blockIn {
+      from { opacity: 0; transform: translateY(22px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-12px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
     }
 
     @media (max-width: 480px) {
       main { padding: 3rem 1.15rem 2.5rem; }
-      li { padding-left: 2.55rem; font-size: 0.92rem; }
+      li { padding-left: 2.7rem; font-size: 0.92rem; }
     }
   </style>
 </head>
 <body>
-  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="atmosphere" aria-hidden="true">
+    <div class="orb orb-a"></div>
+    <div class="orb orb-b"></div>
+    <div class="orb orb-c"></div>
+    <div class="noise"></div>
+  </div>
 
   <main>
-    <h1 class="brand">Генератор идей</h1>
+    <h1 class="brand">Генератор <span class="accent-word">идей</span></h1>
+    <span class="underline" aria-hidden="true"></span>
     <p class="lead">Пять идей постов и две истории на завтра — свежая порция за одно нажатие.</p>
-    <button type="button" class="cta" id="generateBtn">Сгенерировать</button>
+    <button type="button" class="cta" id="generateBtn">
+      <span class="spin" aria-hidden="true"></span>
+      <span class="cta-label">Сгенерировать</span>
+    </button>
 
-    <p class="empty" id="emptyHint">Нажмите кнопку — появятся идеи.</p>
+    <p class="empty" id="emptyHint">
+      <span class="dots" aria-hidden="true"><span></span><span></span><span></span></span>
+      Нажмите кнопку — появятся идеи
+    </p>
 
     <div class="results" id="results" hidden>
       <section class="block" id="postsBlock" aria-labelledby="postsTitle">
-        <h2 id="postsTitle">Идеи постов <span>5 штук</span></h2>
+        <h2 id="postsTitle">Идеи постов <span class="tag">5 штук</span></h2>
         <ol id="postsList"></ol>
       </section>
 
-      <section class="block" id="storiesBlock" aria-labelledby="storiesTitle">
-        <h2 id="storiesTitle">Истории на завтра <span>2 штуки</span></h2>
+      <section class="block stories-block" id="storiesBlock" aria-labelledby="storiesTitle">
+        <h2 id="storiesTitle">Истории на завтра <span class="tag">2 штуки</span></h2>
         <ul id="storiesList"></ul>
       </section>
     </div>
@@ -285,6 +481,7 @@
     }
 
     const btn = document.getElementById("generateBtn");
+    const label = btn.querySelector(".cta-label");
     const results = document.getElementById("results");
     const emptyHint = document.getElementById("emptyHint");
     const postsList = document.getElementById("postsList");
@@ -293,22 +490,30 @@
     const storiesBlock = document.getElementById("storiesBlock");
 
     function render() {
-      const posts = pick(POST_IDEAS, 5);
-      const stories = pick(STORY_IDEAS, 2);
+      btn.classList.add("is-loading");
+      btn.disabled = true;
 
-      postsList.innerHTML = posts.map((t) => `<li>${t}</li>`).join("");
-      storiesList.innerHTML = stories.map((t) => `<li>${t}</li>`).join("");
+      postsBlock.classList.remove("visible", "delay");
+      storiesBlock.classList.remove("visible", "delay");
 
-      emptyHint.classList.add("hidden");
-      results.hidden = false;
+      setTimeout(() => {
+        const posts = pick(POST_IDEAS, 5);
+        const stories = pick(STORY_IDEAS, 2);
 
-      postsBlock.classList.remove("visible");
-      storiesBlock.classList.remove("visible");
-      void postsBlock.offsetWidth;
-      postsBlock.classList.add("visible");
-      storiesBlock.classList.add("visible");
+        postsList.innerHTML = posts.map((t) => `<li>${t}</li>`).join("");
+        storiesList.innerHTML = stories.map((t) => `<li>${t}</li>`).join("");
 
-      btn.textContent = "Ещё раз";
+        emptyHint.classList.add("hidden");
+        results.hidden = false;
+
+        void postsBlock.offsetWidth;
+        postsBlock.classList.add("visible");
+        storiesBlock.classList.add("visible", "delay");
+
+        label.textContent = "Ещё раз";
+        btn.classList.remove("is-loading");
+        btn.disabled = false;
+      }, 280);
     }
 
     btn.addEventListener("click", render);
