@@ -17,55 +17,71 @@
   </script>
   <style>
     :root {
-      --ink: #0f2744;
-      --muted: #5a6d82;
-      --paper: #e8eef4;
-      --accent: #e85d4c;
-      --accent-deep: #c94436;
-      --sky: #7eb8d8;
-      --mist: #c5d8e8;
-      --line: rgba(15, 39, 68, 0.1);
-      --surface: rgba(255, 255, 255, 0.62);
-      --surface-hover: rgba(255, 255, 255, 0.85);
-      --border: rgba(255, 255, 255, 0.75);
-      --cta-text: #f4f8fc;
-      --orb-a: #f0a090;
-      --orb-b: #7eb8d8;
-      --orb-c: #a8c8e0;
-      --bg-spot-a: #f7c5b8;
-      --bg-mid: #dce6f0;
-      --bg-end: #d4e4f0;
-      --toggle-bg: rgba(255, 255, 255, 0.7);
-      --toggle-border: rgba(15, 39, 68, 0.12);
-      --tag-story: #2a6a8a;
-      --tag-story-bg: rgba(126, 184, 216, 0.28);
-      --noise-opacity: 0.04;
+      --ink: #12263a;
+      --muted: #3d5a73;
+      --paper: #fff8ef;
+      --accent: #ff4d3a;
+      --accent-deep: #e63522;
+      --sky: #00b4d8;
+      --mist: #ffe08a;
+      --line: rgba(18, 38, 58, 0.08);
+      --surface: rgba(255, 255, 255, 0.82);
+      --surface-hover: #ffffff;
+      --border: rgba(255, 255, 255, 0.95);
+      --cta-text: #ffffff;
+      --orb-a: #ff6b4a;
+      --orb-b: #2ec4ff;
+      --orb-c: #ffd166;
+      --bg-spot-a: #ffb4a2;
+      --bg-spot-b: #7fdbff;
+      --bg-mid: #fff3d6;
+      --bg-end: #d9f4ff;
+      --toggle-bg: rgba(255, 255, 255, 0.85);
+      --toggle-border: rgba(18, 38, 58, 0.1);
+      --tag-post: #c62818;
+      --tag-post-bg: rgba(255, 77, 58, 0.18);
+      --tag-story: #0277a0;
+      --tag-story-bg: rgba(0, 180, 216, 0.22);
+      --noise-opacity: 0.03;
+      --cta-bg: linear-gradient(135deg, #ff4d3a 0%, #ff8c42 55%, #ffb703 100%);
+      --cta-hover: linear-gradient(135deg, #e63522 0%, #ff7040 55%, #ffa000 100%);
+      --num-bg: linear-gradient(145deg, #ff9a7a, #ff4d3a);
+      --num-story-bg: linear-gradient(145deg, #7fdbff, #0096c7);
+      --accent-grad: linear-gradient(120deg, #ff4d3a 0%, #ff8c42 45%, #ffb703 100%);
     }
 
     [data-theme="dark"] {
-      --ink: #e8eef6;
-      --muted: #9aadc2;
-      --paper: #0d1520;
-      --accent: #f07162;
-      --accent-deep: #e85d4c;
-      --sky: #6aa8c8;
-      --mist: #1a2d42;
-      --line: rgba(232, 238, 246, 0.08);
-      --surface: rgba(22, 34, 52, 0.72);
-      --surface-hover: rgba(32, 48, 72, 0.92);
-      --border: rgba(255, 255, 255, 0.08);
-      --cta-text: #0d1520;
-      --orb-a: #8a3d35;
-      --orb-b: #2a5570;
-      --orb-c: #1e3a55;
-      --bg-spot-a: #3a2420;
-      --bg-mid: #101a28;
-      --bg-end: #0a121c;
-      --toggle-bg: rgba(22, 34, 52, 0.85);
-      --toggle-border: rgba(255, 255, 255, 0.12);
-      --tag-story: #9ec9e0;
-      --tag-story-bg: rgba(106, 168, 200, 0.2);
-      --noise-opacity: 0.06;
+      --ink: #f2f7ff;
+      --muted: #a8c0d8;
+      --paper: #0b1624;
+      --accent: #ff6b57;
+      --accent-deep: #ff4d3a;
+      --sky: #3dd6ff;
+      --mist: #1e3a55;
+      --line: rgba(242, 247, 255, 0.1);
+      --surface: rgba(24, 40, 62, 0.78);
+      --surface-hover: rgba(36, 58, 88, 0.95);
+      --border: rgba(255, 255, 255, 0.12);
+      --cta-text: #ffffff;
+      --orb-a: #ff5a3c;
+      --orb-b: #1fb6ff;
+      --orb-c: #ffc14d;
+      --bg-spot-a: #5a2218;
+      --bg-spot-b: #0a3d55;
+      --bg-mid: #121f30;
+      --bg-end: #0a1522;
+      --toggle-bg: rgba(24, 40, 62, 0.9);
+      --toggle-border: rgba(255, 255, 255, 0.14);
+      --tag-post: #ffb4a8;
+      --tag-post-bg: rgba(255, 107, 87, 0.22);
+      --tag-story: #7fdbff;
+      --tag-story-bg: rgba(61, 214, 255, 0.18);
+      --noise-opacity: 0.05;
+      --cta-bg: linear-gradient(135deg, #ff5a3c 0%, #ff8c42 55%, #ffc107 100%);
+      --cta-hover: linear-gradient(135deg, #ff4d3a 0%, #ff7040 55%, #ffb300 100%);
+      --num-bg: linear-gradient(145deg, #ff8a6a, #ff4d3a);
+      --num-story-bg: linear-gradient(145deg, #5ecfff, #0096c7);
+      --accent-grad: linear-gradient(120deg, #ff6b57 0%, #ff9a4a 45%, #ffd166 100%);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -75,9 +91,10 @@
       font-family: "Outfit", sans-serif;
       color: var(--ink);
       background:
-        radial-gradient(ellipse 70% 55% at 85% -10%, var(--bg-spot-a) 0%, transparent 55%),
-        radial-gradient(ellipse 55% 45% at -5% 90%, var(--mist) 0%, transparent 50%),
-        linear-gradient(160deg, var(--bg-mid) 0%, var(--paper) 40%, var(--bg-end) 100%);
+        radial-gradient(ellipse 65% 50% at 90% -5%, var(--bg-spot-a) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 45% at 0% 95%, var(--bg-spot-b) 0%, transparent 50%),
+        radial-gradient(ellipse 40% 35% at 50% 40%, var(--mist) 0%, transparent 60%),
+        linear-gradient(160deg, var(--bg-mid) 0%, var(--paper) 42%, var(--bg-end) 100%);
       overflow-x: hidden;
       transition: background 0.4s ease, color 0.35s ease;
     }
@@ -93,36 +110,40 @@
     .orb {
       position: absolute;
       border-radius: 50%;
-      filter: blur(40px);
-      opacity: 0.55;
+      filter: blur(36px);
+      opacity: 0.72;
       animation: drift 18s ease-in-out infinite;
     }
 
+    [data-theme="dark"] .orb {
+      opacity: 0.45;
+    }
+
     .orb-a {
-      width: 280px;
-      height: 280px;
+      width: 320px;
+      height: 320px;
       background: var(--orb-a);
-      top: -60px;
-      right: 8%;
+      top: -80px;
+      right: 4%;
       animation-duration: 16s;
     }
 
     .orb-b {
-      width: 220px;
-      height: 220px;
+      width: 260px;
+      height: 260px;
       background: var(--orb-b);
-      bottom: 10%;
-      left: -40px;
+      bottom: 8%;
+      left: -50px;
       animation-duration: 22s;
       animation-direction: reverse;
     }
 
     .orb-c {
-      width: 160px;
-      height: 160px;
+      width: 200px;
+      height: 200px;
       background: var(--orb-c);
-      top: 45%;
-      right: -30px;
+      top: 42%;
+      right: -40px;
       animation-duration: 14s;
       animation-delay: -4s;
     }
@@ -202,7 +223,7 @@
 
     .brand .accent-word {
       display: inline-block;
-      background: linear-gradient(120deg, var(--accent) 0%, #f08a5a 100%);
+      background: var(--accent-grad);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
@@ -212,10 +233,10 @@
     .underline {
       display: block;
       width: 0;
-      height: 4px;
+      height: 5px;
       margin-top: 0.7rem;
-      border-radius: 2px;
-      background: linear-gradient(90deg, var(--accent), var(--sky));
+      border-radius: 3px;
+      background: linear-gradient(90deg, #ff4d3a, #ffb703, #00b4d8);
       animation: drawLine 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.35s both;
     }
 
@@ -237,38 +258,31 @@
       padding: 0.95rem 1.55rem;
       border: none;
       border-radius: 12px;
-      background: var(--ink);
+      background: var(--cta-bg);
       color: var(--cta-text);
       font: inherit;
       font-weight: 600;
       font-size: 0.98rem;
       cursor: pointer;
       overflow: hidden;
-      transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease;
+      box-shadow: 0 8px 24px rgba(255, 77, 58, 0.35);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
       animation: rise 0.7s ease 0.32s both;
-    }
-
-    [data-theme="dark"] .cta {
-      background: var(--accent);
-      color: #fff;
-    }
-
-    [data-theme="dark"] .cta:hover {
-      background: var(--accent-deep);
     }
 
     .cta::before {
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.18) 50%, transparent 70%);
+      background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.28) 50%, transparent 70%);
       transform: translateX(-120%);
       animation: shimmer 3.2s ease-in-out infinite;
     }
 
     .cta:hover {
-      background: var(--accent-deep);
+      filter: brightness(1.05);
       transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(255, 77, 58, 0.42);
     }
 
     .cta:active { transform: translateY(-1px) scale(0.98); }
@@ -317,7 +331,7 @@
     }
 
     .dots span:nth-child(2) { animation-delay: 0.15s; background: var(--sky); }
-    .dots span:nth-child(3) { animation-delay: 0.3s; background: var(--ink); }
+    .dots span:nth-child(3) { animation-delay: 0.3s; background: #ffb703; }
 
     .results {
       margin-top: 2.75rem;
@@ -355,8 +369,8 @@
       font-weight: 600;
       letter-spacing: 0.06em;
       text-transform: uppercase;
-      color: var(--accent-deep);
-      background: rgba(232, 93, 76, 0.14);
+      color: var(--tag-post);
+      background: var(--tag-post-bg);
       padding: 0.25rem 0.6rem;
       border-radius: 6px;
     }
@@ -381,10 +395,10 @@
       border-radius: 14px;
       line-height: 1.45;
       font-size: 0.98rem;
-      box-shadow: 0 1px 0 rgba(15, 39, 68, 0.04);
+      box-shadow: 0 4px 18px rgba(255, 77, 58, 0.06), 0 1px 0 rgba(15, 39, 68, 0.04);
       opacity: 0;
       transform: translateX(-12px);
-      transition: border-color 0.25s ease, transform 0.25s ease, background 0.25s ease;
+      transition: border-color 0.25s ease, transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
     }
 
     .block.visible li {
@@ -392,13 +406,15 @@
     }
 
     li:hover {
-      border-color: rgba(232, 93, 76, 0.35);
+      border-color: rgba(255, 77, 58, 0.45);
       background: var(--surface-hover);
       transform: translateX(4px);
+      box-shadow: 0 8px 22px rgba(255, 77, 58, 0.12);
     }
 
     .stories-block li:hover {
-      border-color: rgba(126, 184, 216, 0.55);
+      border-color: rgba(0, 180, 216, 0.5);
+      box-shadow: 0 8px 22px rgba(0, 180, 216, 0.12);
     }
 
     li::before {
@@ -411,14 +427,14 @@
       display: grid;
       place-items: center;
       border-radius: 8px;
-      background: linear-gradient(145deg, #f5b5aa, var(--accent));
+      background: var(--num-bg);
       color: #fff;
       font-size: 0.7rem;
       font-weight: 700;
     }
 
     .stories-block li::before {
-      background: linear-gradient(145deg, #a8d4ec, #4a9bc4);
+      background: var(--num-story-bg);
     }
 
     ol li:nth-child(1)::before { content: "1"; }
