@@ -8,6 +8,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    (function () {
+      const saved = localStorage.getItem("ideas-theme");
+      const dark = saved === "dark" || (!saved && matchMedia("(prefers-color-scheme: dark)").matches);
+      if (dark) document.documentElement.setAttribute("data-theme", "dark");
+    })();
+  </script>
   <style>
     :root {
       --ink: #0f2744;
@@ -19,6 +26,46 @@
       --mist: #c5d8e8;
       --line: rgba(15, 39, 68, 0.1);
       --surface: rgba(255, 255, 255, 0.62);
+      --surface-hover: rgba(255, 255, 255, 0.85);
+      --border: rgba(255, 255, 255, 0.75);
+      --cta-text: #f4f8fc;
+      --orb-a: #f0a090;
+      --orb-b: #7eb8d8;
+      --orb-c: #a8c8e0;
+      --bg-spot-a: #f7c5b8;
+      --bg-mid: #dce6f0;
+      --bg-end: #d4e4f0;
+      --toggle-bg: rgba(255, 255, 255, 0.7);
+      --toggle-border: rgba(15, 39, 68, 0.12);
+      --tag-story: #2a6a8a;
+      --tag-story-bg: rgba(126, 184, 216, 0.28);
+      --noise-opacity: 0.04;
+    }
+
+    [data-theme="dark"] {
+      --ink: #e8eef6;
+      --muted: #9aadc2;
+      --paper: #0d1520;
+      --accent: #f07162;
+      --accent-deep: #e85d4c;
+      --sky: #6aa8c8;
+      --mist: #1a2d42;
+      --line: rgba(232, 238, 246, 0.08);
+      --surface: rgba(22, 34, 52, 0.72);
+      --surface-hover: rgba(32, 48, 72, 0.92);
+      --border: rgba(255, 255, 255, 0.08);
+      --cta-text: #0d1520;
+      --orb-a: #8a3d35;
+      --orb-b: #2a5570;
+      --orb-c: #1e3a55;
+      --bg-spot-a: #3a2420;
+      --bg-mid: #101a28;
+      --bg-end: #0a121c;
+      --toggle-bg: rgba(22, 34, 52, 0.85);
+      --toggle-border: rgba(255, 255, 255, 0.12);
+      --tag-story: #9ec9e0;
+      --tag-story-bg: rgba(106, 168, 200, 0.2);
+      --noise-opacity: 0.06;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -28,10 +75,11 @@
       font-family: "Outfit", sans-serif;
       color: var(--ink);
       background:
-        radial-gradient(ellipse 70% 55% at 85% -10%, #f7c5b8 0%, transparent 55%),
+        radial-gradient(ellipse 70% 55% at 85% -10%, var(--bg-spot-a) 0%, transparent 55%),
         radial-gradient(ellipse 55% 45% at -5% 90%, var(--mist) 0%, transparent 50%),
-        linear-gradient(160deg, #dce6f0 0%, var(--paper) 40%, #d4e4f0 100%);
+        linear-gradient(160deg, var(--bg-mid) 0%, var(--paper) 40%, var(--bg-end) 100%);
       overflow-x: hidden;
+      transition: background 0.4s ease, color 0.35s ease;
     }
 
     .atmosphere {
@@ -53,7 +101,7 @@
     .orb-a {
       width: 280px;
       height: 280px;
-      background: #f0a090;
+      background: var(--orb-a);
       top: -60px;
       right: 8%;
       animation-duration: 16s;
@@ -62,7 +110,7 @@
     .orb-b {
       width: 220px;
       height: 220px;
-      background: var(--sky);
+      background: var(--orb-b);
       bottom: 10%;
       left: -40px;
       animation-duration: 22s;
@@ -72,7 +120,7 @@
     .orb-c {
       width: 160px;
       height: 160px;
-      background: #a8c8e0;
+      background: var(--orb-c);
       top: 45%;
       right: -30px;
       animation-duration: 14s;
@@ -82,8 +130,56 @@
     .noise {
       position: absolute;
       inset: 0;
-      opacity: 0.04;
+      opacity: var(--noise-opacity);
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 1.15rem;
+      right: 1.15rem;
+      z-index: 10;
+      width: 2.75rem;
+      height: 2.75rem;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--toggle-border);
+      border-radius: 12px;
+      background: var(--toggle-bg);
+      backdrop-filter: blur(10px);
+      color: var(--ink);
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(15, 39, 68, 0.08);
+      transition: transform 0.25s ease, background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+      animation: rise 0.7s ease 0.1s both;
+    }
+
+    .theme-toggle:hover {
+      transform: translateY(-2px) rotate(-8deg);
+    }
+
+    .theme-toggle:active {
+      transform: scale(0.95);
+    }
+
+    .theme-toggle svg {
+      width: 1.2rem;
+      height: 1.2rem;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .theme-toggle .icon-sun { display: none; }
+    .theme-toggle .icon-moon { display: block; }
+
+    [data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+    [data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+
+    [data-theme="dark"] .theme-toggle {
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
     }
 
     main {
@@ -142,14 +238,23 @@
       border: none;
       border-radius: 12px;
       background: var(--ink);
-      color: #f4f8fc;
+      color: var(--cta-text);
       font: inherit;
       font-weight: 600;
       font-size: 0.98rem;
       cursor: pointer;
       overflow: hidden;
-      transition: transform 0.25s ease, background 0.25s ease;
+      transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease;
       animation: rise 0.7s ease 0.32s both;
+    }
+
+    [data-theme="dark"] .cta {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    [data-theme="dark"] .cta:hover {
+      background: var(--accent-deep);
     }
 
     .cta::before {
@@ -257,8 +362,8 @@
     }
 
     .stories-block h2 .tag {
-      color: #2a6a8a;
-      background: rgba(126, 184, 216, 0.28);
+      color: var(--tag-story);
+      background: var(--tag-story-bg);
     }
 
     ol, ul {
@@ -272,7 +377,7 @@
       padding: 1rem 1.15rem 1rem 3rem;
       background: var(--surface);
       backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.75);
+      border: 1px solid var(--border);
       border-radius: 14px;
       line-height: 1.45;
       font-size: 0.98rem;
@@ -288,7 +393,7 @@
 
     li:hover {
       border-color: rgba(232, 93, 76, 0.35);
-      background: rgba(255, 255, 255, 0.85);
+      background: var(--surface-hover);
       transform: translateX(4px);
     }
 
@@ -398,6 +503,22 @@
   </style>
 </head>
 <body>
+  <button
+    type="button"
+    class="theme-toggle"
+    id="themeToggle"
+    title="Переключить тему"
+    aria-label="Включить тёмную тему"
+  >
+    <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M21 14.3A9 9 0 1 1 9.7 3 7 7 0 0 0 21 14.3z"/>
+    </svg>
+    <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="12" cy="12" r="4"/>
+      <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
+    </svg>
+  </button>
+
   <div class="atmosphere" aria-hidden="true">
     <div class="orb orb-a"></div>
     <div class="orb orb-b"></div>
@@ -517,6 +638,28 @@
     }
 
     btn.addEventListener("click", render);
+
+    const themeToggle = document.getElementById("themeToggle");
+
+    function syncThemeLabel() {
+      const dark = document.documentElement.getAttribute("data-theme") === "dark";
+      themeToggle.setAttribute("aria-label", dark ? "Включить светлую тему" : "Включить тёмную тему");
+      themeToggle.title = dark ? "Светлая тема" : "Тёмная тема";
+    }
+
+    themeToggle.addEventListener("click", () => {
+      const dark = document.documentElement.getAttribute("data-theme") === "dark";
+      if (dark) {
+        document.documentElement.removeAttribute("data-theme");
+        localStorage.setItem("ideas-theme", "light");
+      } else {
+        document.documentElement.setAttribute("data-theme", "dark");
+        localStorage.setItem("ideas-theme", "dark");
+      }
+      syncThemeLabel();
+    });
+
+    syncThemeLabel();
   </script>
 </body>
 </html>
